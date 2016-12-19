@@ -9,6 +9,8 @@ and thus the script in question be run against the target.
 
 First you import the function, then you set the portrule to shortport.<service>
 
+```Lua
 local shortport = require "shortport"
 
 portrule = shortport.http
+```
