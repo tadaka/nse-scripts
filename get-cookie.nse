@@ -25,8 +25,6 @@ portrule = shortport.http
 
 action = function(host,port)
 
-  local cookie_values = {}
-
   local path = nmap.registry.args.path
 
   if(path == nil) then
@@ -34,16 +32,12 @@ action = function(host,port)
   end
 
   local response = http.get(host, port, path)
-
   local cookiejar = {}
 
   for _, cookie in pairs(response.cookies) do
-
     stdnse.print_debug(0, "Cookie: name=%s; value=%s; path=%s", cookie.name, cookie.value, cookie.path)
-
     table.insert(cookiejar, "Cookie: name=" .. cookie.name .. "; value=" .. cookie.value .. "; path=" .. cookie.path)
-
-   end
+  end
 
    return stdnse.format_output(true, cookiejar)
 
