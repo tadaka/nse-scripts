@@ -12,7 +12,8 @@ Connects to a website, get's any cookies that are present and prints them
 --
 -- @output
 -- 80/tcp open   http
--- | get-cookie: <cookie values>
+-- | get-cookie:
+-- |_ Cookie: name=<cookiename>; value=<cookievalue>; path=<cookiepath>
 --
 ---
 
