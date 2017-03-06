@@ -1,3 +1,4 @@
+-- The Head
 local shortport = require "shortport"
 
 description = [[
@@ -16,10 +17,12 @@ author = "Jason Wood"
 license = "Same as Nmap--See https://nmap.org/book/man-legal.html"
 categories = { "safe" }
 
-portrule = shortport.http
+-- The Rule
+portrule = shortport.port_or_service(80, "http", "tcp")
 
+-- The Action
 action = function(host,port)
   local myoutput = "Hi there!"
-  
+
   return myoutput
 end
