@@ -35,7 +35,6 @@ action = function(host,port)
   local cookiejar = {}
 
   for _, cookie in pairs(response.cookies) do
-    -- stdnse.print_debug(0, "Cookie: name=%s; value=%s; path=%s", cookie.name, cookie.value, cookie.path)
     table.insert(cookiejar, "Cookie: name=" .. cookie.name .. "; value=" .. cookie.value .. "; path=" .. cookie.path)
   end
 
