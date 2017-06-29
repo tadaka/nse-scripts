@@ -17,7 +17,7 @@ Future: Check Wordpress version and check if out of date
 -- @output
 -- 80/tcp open   http
 -- | wordpress-version-check:
--- |_ Current Version: <Version Number>
+-- |  Current Version: <Version Number>
 -- |_ Installed Version:  <Installed Version Number>
 --
 ---
@@ -38,23 +38,17 @@ action = function(host,port)
 
   -- Get the latest version number of wordpress from wordpress.org
   local wpresponse = http.get('wordpress.org', 443, '/download')
-  local wpversion = string.match(wpresponse.body,"Download&nbsp;WordPress&nbsp;(%d+.%d+.%d+)")
+  local wpversion = string.match(wpresponse.body,"Download&nbsp;WordPress&nbsp;(%d+.%d+.?%d*)")
 
   -- Get our installed version of Wordpress
   local response = http.get(host, port, path)
-  local installedversion = ''
+  local installedversion = string.match(response.body,"WordPress (%d+.%d+.?%d*)")
 
+  -- If installedversion is empty, then set it to 'Unknown'
+  if(installedversion == nil) then
+    installedversion = 'Unknown'
+  end
 
-  -- Return the latest version and the installed version of wordpress
-   return stdnse.format_output(true, wpversion)
-
-
-   --  stdnse.debug(wpresponse.body)
-   ---
-   --  for _, cookie in pairs(response.cookies) do
-   --    stdnse.debug(0, "Cookie: name=%s; value=%s; path=%s", cookie.name, cookie.value, cookie.path)
-   --    table.insert(cookiejar, "Cookie: name=" .. cookie.name .. "; value=" .. cookie.value .. "; path=" .. cookie.path)
-   --  end
-   ---
+  return stdnse.format_output(true, "CurrentVersion: " .. wpversion .. "\nInstalled version: " .. installedversion)
 
 end
